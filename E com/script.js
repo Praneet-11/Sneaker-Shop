@@ -1,5 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ADD TO CART (on home.html)
+  // ✅ LOGIN FUNCTIONALITY
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const error = document.getElementById("errorMessage");
+
+      if (username && password) {
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "home.html";
+      } else {
+        error.textContent = "❌ Please enter both email and password.";
+      }
+    });
+  }
+
+  // ✅ LOGOUT FUNCTIONALITY (on home/cart)
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "login.html";
+    });
+  }
+
+  // ✅ ADD TO CART (on home.html)
   document.querySelectorAll(".add-cart-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const item = {
@@ -14,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // RENDER CART (on cart.html)
+  // ✅ RENDER CART (on cart.html)
   const cartContainer = document.getElementById("cartContainer");
   if (cartContainer) {
     const productImages = {
@@ -66,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cartContainer.appendChild(buyBtn);
     };
 
-    // REMOVE BUTTON LOGIC
     cartContainer.addEventListener("click", (e) => {
       if (e.target.classList.contains("remove-btn")) {
         const index = parseInt(e.target.dataset.index);
